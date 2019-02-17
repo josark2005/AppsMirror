@@ -69,7 +69,7 @@ def main():
     file = {file: fileData}
     print('Posting file.')
     r = requests.post(post_url, headers={'Max-Days': '2'}, files=file)
-    file_gui = r.data.decode('utf-8')
+    file_gui = r.text
     # 修改HTML内容
     # 读取模板
     try:
