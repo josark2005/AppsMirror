@@ -5,6 +5,7 @@ import re
 import os
 import sys
 import ssl
+import shutil
 import urllib3
 import requests
 from contextlib import closing
@@ -57,6 +58,10 @@ def main():
                 sys.exit('Failed to write file.')
     except Exception as e:
         sys.exit('Failed to download file.\n' + str(e))
+    try:
+        shutil.copy('./assets/index.html', './public/index.html')
+    except Exception:
+        sys.exit('Failed to copy assets.')
 
 
 if __name__ == '__main__':
