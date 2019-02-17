@@ -1,23 +1,23 @@
 #!usr/bin/python3
 # -*- coding: utf-8 -*-
 
-# import re
-# import os
+import re
+import os
 import sys
-# import ssl
+import ssl
 import shutil
-# import urllib3
-# import requests
-# from contextlib import closing
+import urllib3
+import requests
+from contextlib import closing
 
 
 def main():
-    # # 检查目录情况
-    # if not (os.path.isdir('./public')):
-    #     try:
-    #         os.mkdir('./public')
-    #     except Exception:
-    #         sys.exit('Failed to make public directory.')
+    # 检查目录情况
+    if not (os.path.isdir('./public')):
+        try:
+            os.mkdir('./public')
+        except Exception:
+            sys.exit('Failed to make public directory.')
     # # 关闭证书验证
     # ssl._create_default_https_context = ssl._create_unverified_context
     # # 取消关闭验证安全提醒
