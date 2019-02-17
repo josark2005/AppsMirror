@@ -70,6 +70,7 @@ def main():
     print('Posting file.')
     r = requests.post(post_url, headers={'Max-Days': '2'}, files=file)
     file_gui = r.text
+    print(file_gui)
     # 修改HTML内容
     # 读取模板
     try:
