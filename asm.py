@@ -5,7 +5,6 @@ import re
 import os
 import sys
 import ssl
-import shutil
 import urllib3
 import requests
 from contextlib import closing
@@ -49,7 +48,7 @@ def main():
             content_size = int(res.headers['Content-Length'])
             print('File size: ' + str(content_size))
             try:
-                with open('./public/' + os.path.basename(download_link), "wb") as file:
+                with open('./' + os.path.basename(download_link), "wb") as file:
                     for data in res.iter_content(chunk_size=chunk_size):
                         downloaded_size += chunk_size
                         print('Progress: ' + str(round(downloaded_size/content_size*100, 2)) + r'%', end='\r')
@@ -58,10 +57,33 @@ def main():
                 sys.exit('Failed to write file.')
     except Exception as e:
         sys.exit('Failed to download file.\n' + str(e))
+    # 上传CDN
+    post_url = 'https://transfer.sh/'
+    file = './gui.exe'
+    print('Reading file.')
     try:
-        shutil.copy('./assets/index.html', './public/index.html')
+        with open(file, 'rb') as f:
+            fileData = f.read()
     except Exception:
-        sys.exit('Failed to copy assets.')
+        sys.exit('Failed to read file.')
+    file = {file: fileData}
+    print('Posting file.')
+    r = requests.post(post_url, headers={'Max-Days': '2'}, files=file)
+    file_gui = r.data.decode('utf-8')
+    # 修改HTML内容
+    # 读取模板
+    try:
+        with open('./assets/index.html', 'r', encoding='utf-8') as f:
+            html = f.read()
+    except Exception:
+        sys.exit('Failed to read asset file.')
+    html.replace('__gui.exe__', file_gui)
+    # 写入模板
+    try:
+        with open('./public/index.html', 'w', encoding='utf-8') as f:
+            f.write(html)
+    except Exception:
+        sys.exit('Failed to write index.html.')
 
 
 if __name__ == '__main__':
