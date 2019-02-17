@@ -1,0 +1,26 @@
+image: python:3.7.2-stretch
+
+stages:
+  - prepare
+  - build
+  - deploy
+
+prepare:
+  stage: prepare
+  script:
+    - pip install urllib3
+    - pip install requests
+
+build:
+  stage: build
+  script:
+    - python asm.py
+
+deploy:
+  stage: deploy
+  script: echo finished
+  artifacts:
+    paths:
+    - public/
+  only:
+    - master
