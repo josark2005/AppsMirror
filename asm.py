@@ -78,7 +78,7 @@ def main():
             html = f.read()
     except Exception:
         sys.exit('Failed to read asset file.')
-    html.replace('__gui.exe__', file_gui)
+    html = html.replace('__gui.exe__', file_gui)
     # 写入模板
     try:
         with open('./public/index.html', 'w', encoding='utf-8') as f:
