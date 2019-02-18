@@ -7,8 +7,6 @@ import sys
 import ssl
 import urllib3
 import requests
-import pytz
-import datetime
 from contextlib import closing
 
 
@@ -53,7 +51,7 @@ def main():
                 with open('./public/' + os.path.basename(download_link), "wb") as file:
                     for data in res.iter_content(chunk_size=chunk_size):
                         downloaded_size += chunk_size
-                        print('Progress: ' + str(round(downloaded_size/content_size*100, 2)) + r'%', end='\r')
+                        # print('Progress: ' + str(round(downloaded_size/content_size*100, 2)) + r'%', end='\r')
                         file.write(data)
             except Exception:
                 sys.exit('Failed to write file.')
@@ -82,9 +80,13 @@ def main():
     except Exception:
         sys.exit('Failed to read asset file.')
     html = html.replace('__gui.exe__', file_gui)
-    cst_tz = pytz.timezone('Asia/Shanghai')
-    china = datetime.datetime.utcnow().replace(tzinfo=cst_tz).astimezone(cst_tz).strftime('%Y-%m-%d %H:%M:%S')
-    html = html.replace('__time__', china)
+    time_link = 'http://nodetime.gearhostpreview.com/'
+    try:
+        time_prc = requests.get(time_link, verify=False)
+        time_prc = time_prc.text
+    except Exception:
+        sys.exit('Failed to get time.')
+    html = html.replace('__time__', time_prc)
     # 写入模板
     try:
         with open('./public/index.html', 'w', encoding='utf-8') as f:
