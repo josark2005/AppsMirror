@@ -50,7 +50,7 @@ def main():
             content_size = int(res.headers['Content-Length'])
             print('File size: ' + str(content_size))
             try:
-                with open('./' + os.path.basename(download_link), "wb") as file:
+                with open('./public' + os.path.basename(download_link), "wb") as file:
                     for data in res.iter_content(chunk_size=chunk_size):
                         downloaded_size += chunk_size
                         print('Progress: ' + str(round(downloaded_size/content_size*100, 2)) + r'%', end='\r')
@@ -82,7 +82,7 @@ def main():
     except Exception:
         sys.exit('Failed to read asset file.')
     html = html.replace('__gui.exe__', file_gui)
-    html = html.replace('__time__', datetime.datetime.now().replace(tzinfo=pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d %H:%M:%S'))
+    html = html.replace('__time__', datetime.datetime.utcnow().astimezone(pytz.timezone('Asia/Shanghai')))
     # 写入模板
     try:
         with open('./public/index.html', 'w', encoding='utf-8') as f:
