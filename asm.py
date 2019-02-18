@@ -82,7 +82,9 @@ def main():
     except Exception:
         sys.exit('Failed to read asset file.')
     html = html.replace('__gui.exe__', file_gui)
-    html = html.replace('__time__', datetime.datetime.utcnow().astimezone(pytz.timezone('Asia/Shanghai')))
+    cst_tz = pytz.timezone('Asia/Shanghai')
+    china = datetime.datetime.utcnow().replace(tzinfo=cst_tz).astimezone(cst_tz).strftime('%Y-%m-%d %H:%M:%S')
+    html = html.replace('__time__', china)
     # 写入模板
     try:
         with open('./public/index.html', 'w', encoding='utf-8') as f:
