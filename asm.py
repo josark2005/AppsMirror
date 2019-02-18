@@ -72,7 +72,7 @@ def allinone(author, project, filename, target='./public/'):
     download_link = getDownloadLink(author, project, filename)
     filename = download_file(download_link, target)
     tpl = '<a href="/__href__" target="_blank">__project__</a>'
-    filelist.qppend(tpl.replace('__href__', filename).replace('__project__', project))
+    filelist.append(tpl.replace('__href__', filename).replace('__project__', project))
 
 
 def main():
