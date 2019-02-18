@@ -8,7 +8,6 @@ pages:
   script:
   - pip install urllib3
   - pip install requests
-  - pip install pytz
   - python asm.py
   artifacts:
     paths:
