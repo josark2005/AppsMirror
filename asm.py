@@ -50,7 +50,7 @@ def main():
             content_size = int(res.headers['Content-Length'])
             print('File size: ' + str(content_size))
             try:
-                with open('./public' + os.path.basename(download_link), "wb") as file:
+                with open('./public/' + os.path.basename(download_link), "wb") as file:
                     for data in res.iter_content(chunk_size=chunk_size):
                         downloaded_size += chunk_size
                         print('Progress: ' + str(round(downloaded_size/content_size*100, 2)) + r'%', end='\r')
