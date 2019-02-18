@@ -7,6 +7,8 @@ import sys
 import ssl
 import urllib3
 import requests
+import pytz
+import datetime
 from contextlib import closing
 
 
@@ -57,20 +59,21 @@ def main():
                 sys.exit('Failed to write file.')
     except Exception as e:
         sys.exit('Failed to download file.\n' + str(e))
+    file_gui = '/gui.exe'
     # 上传CDN
-    post_url = 'https://transfer.sh/'
-    file = './gui.exe'
-    print('Reading file.')
-    try:
-        with open(file, 'rb') as f:
-            fileData = f.read()
-    except Exception:
-        sys.exit('Failed to read file.')
-    file = {file: fileData}
-    print('Posting file.')
-    r = requests.post(post_url, headers={'Max-Days': '2'}, files=file)
-    file_gui = r.text
-    print(file_gui)
+    # post_url = 'https://transfer.sh/'
+    # file = './gui.exe'
+    # print('Reading file.')
+    # try:
+    #     with open(file, 'rb') as f:
+    #         fileData = f.read()
+    # except Exception:
+    #     sys.exit('Failed to read file.')
+    # file = {file: fileData}
+    # print('Posting file.')
+    # r = requests.post(post_url, headers={'Max-Days': '2'}, files=file)
+    # file_gui = r.text
+    # print(file_gui)
     # 修改HTML内容
     # 读取模板
     try:
@@ -79,6 +82,7 @@ def main():
     except Exception:
         sys.exit('Failed to read asset file.')
     html = html.replace('__gui.exe__', file_gui)
+    html = html.replace('__time__', datetime.datetime.now().replace(tzinfo=pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d %H:%M:%S'))
     # 写入模板
     try:
         with open('./public/index.html', 'w', encoding='utf-8') as f:
