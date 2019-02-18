@@ -71,8 +71,8 @@ def allinone(author, project, filename, target='./public/'):
     global filelist
     download_link = getDownloadLink(author, project, filename)
     filename = download_file(download_link, target)
-    tpl = '<a href="/__href__" target="_blank">__project__</a>'
-    filelist.append(tpl.replace('__href__', filename).replace('__project__', project))
+    tpl = '<a href="/__href__" target="_blank">__project__</a><img src="https://img.shields.io/github/release/__author__/__project__.svg?style=flat-square" alt="badge">'
+    filelist.append(tpl.replace('__href__', filename).replace('__author__', author).replace('__project__', project))
 
 
 def main():
