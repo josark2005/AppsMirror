@@ -11,7 +11,7 @@ from contextlib import closing
 
 
 # 从GitHub获取下载链接
-def getDownloadLink(author, project, filename):
+def getDownloadLink(author, project, filename, retry=0):
     # 获取下载页面
     download_page = 'https://github.com/{}/{}/releases/latest'.format(author, project)
     ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) WallpaperBackuper/1.0.0'
@@ -23,7 +23,11 @@ def getDownloadLink(author, project, filename):
             download_page,
             headers={'user-agent': ua})
     except Exception:
-        sys.exit('Failed to get download page.')
+        if (retry <= 3):
+            print('Failed to get download page, but retry(%d)' % retry+1)
+            getDownloadLink(author, project, filename, retry+1)
+        else:
+            sys.exit('Failed to get download page.')
     data = r.data.decode('utf-8')
     pattern = '/' + author + '.+' + filename.replace('.', '\\.')
     print('search: ' + pattern)
@@ -34,7 +38,7 @@ def getDownloadLink(author, project, filename):
     return download_link
 
 
-def download_file(download_link, target='./public/'):
+def download_file(download_link, target='./public/', retry=0):
     filename = os.path.basename(download_link)
     print('Downloading: ' + filename)
     try:
@@ -55,7 +59,11 @@ def download_file(download_link, target='./public/'):
             except Exception:
                 sys.exit('Failed to write file.')
     except Exception as e:
-        sys.exit('Failed to download file.\n' + str(e))
+        if (retry <= 3):
+            print('Failed to download file, but retry(%d)' % retry+1)
+            download_file(download_link, target, retry+1)
+        else:
+            sys.exit('Failed to download file.\n' + str(e))
     return filename
 
 
@@ -64,7 +72,7 @@ def allinone(author, project, filename, target='./public/'):
     download_link = getDownloadLink(author, project, filename)
     filename = download_file(download_link, target)
     tpl = '<a href="/__href__" target="_blank">__project__</a>'
-    filelist = filelist + tpl.replace('__href__', filename).replace('__project__', project)
+    filelist.qppend(tpl.replace('__href__', filename).replace('__project__', project))
 
 
 def main():
@@ -94,7 +102,7 @@ def main():
             html = f.read()
     except Exception:
         sys.exit('Failed to read asset file.')
-    html = html.replace('__list__', filelist)
+    html = html.replace('__list__', '<br />'.join(filelist))
     time_link = 'http://nodetime.gearhostpreview.com/'
     try:
         time_prc = requests.get(time_link, verify=False)
@@ -112,5 +120,5 @@ def main():
 
 if __name__ == '__main__':
     # 定义全局变量
-    filelist = ''
+    filelist = []
     main()
