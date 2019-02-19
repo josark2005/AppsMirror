@@ -116,6 +116,12 @@ def main():
             f.write(html)
     except Exception:
         sys.exit('Failed to write index.html.')
+    # Wechat
+    try:
+        with open('./public/tencent18116010769473363677.txt', 'w', encoding='utf-8') as f:
+            f.write('16389480770053209008')
+    except Exception:
+        sys.exit('Failed to write tencent18116010769473363677.txt.')
 
 
 if __name__ == '__main__':
