@@ -71,7 +71,8 @@ def allinone(author, project, filename, target='./public/'):
     global filelist
     download_link = getDownloadLink(author, project, filename)
     filename = download_file(download_link, target)
-    tpl = '<a href="/__href__" target="_blank">__project__</a><img src="https://img.shields.io/github/release/__author__/__project__.svg?style=flat-square" alt="badge">'
+    tpl = '<a href="/__href__" target="_blank">__project__</a>\
+    <a href="https://github.com/__author__/__project__" target="_blank"><img src="https://img.shields.io/github/release/__author__/__project__.svg?style=flat-square" alt="badge"></a>'
     filelist.append(tpl.replace('__href__', filename).replace('__author__', author).replace('__project__', project))
 
 
@@ -116,12 +117,6 @@ def main():
             f.write(html)
     except Exception:
         sys.exit('Failed to write index.html.')
-    # Wechat
-    try:
-        with open('./public/tencent18116010769473363677.txt', 'w', encoding='utf-8') as f:
-            f.write('16389480770053209008')
-    except Exception:
-        sys.exit('Failed to write tencent18116010769473363677.txt.')
 
 
 if __name__ == '__main__':
