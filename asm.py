@@ -54,7 +54,7 @@ def download_file(download_link, target='./public/', retry=0):
                 with open(target + filename, "wb") as file:
                     for data in res.iter_content(chunk_size=chunk_size):
                         downloaded_size += chunk_size
-                        print('Progress: ' + str(round(downloaded_size/content_size*100, 2)) + r'%', end='\r')
+                        # print('Progress: ' + str(round(downloaded_size/content_size*100, 2)) + r'%', end='\r')
                         file.write(data)
             except Exception:
                 sys.exit('Failed to write file.')
