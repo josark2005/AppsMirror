@@ -71,9 +71,34 @@ def allinone(author, project, filename, target='./public/'):
     global filelist
     download_link = getDownloadLink(author, project, filename)
     filename = download_file(download_link, target)
-    tpl = '<a href="/__href__" target="_blank">__project__</a>\
+    tpl = '<a href="/__href__" target="_blank" class="list">__project__</a>\
     <a href="https://github.com/__author__/__project__" target="_blank"><img src="https://img.shields.io/github/release/__author__/__project__.svg?style=flat-square" alt="badge"></a>'
     filelist.append(tpl.replace('__href__', filename).replace('__author__', author).replace('__project__', project))
+
+
+def render():
+    # 获取时间
+    time_link = 'http://nodetime.gearhostpreview.com/'
+    try:
+        time_prc = requests.get(time_link, verify=False)
+        time_prc = time_prc.text
+    except Exception:
+        sys.exit('Failed to get time.')
+    for tpl in templates:
+        # 读取模板
+        try:
+            with open('./assets/%s' % tpl, 'r', encoding='utf-8') as f:
+                html = f.read()
+        except Exception:
+            sys.exit('Failed to read asset file.')
+        html = html.replace('__list__', '<br />'.join(filelist))
+        html = html.replace('__time__', time_prc)
+        # 写入模板
+        try:
+            with open('./public/%s' % tpl, 'w', encoding='utf-8') as f:
+                f.write(html)
+        except Exception:
+            sys.exit('Failed to write %s.' % tpl)
 
 
 def main():
@@ -97,29 +122,11 @@ def main():
             allinone(fileinfo[0], fileinfo[1], fileinfo[2], fileinfo[3])
         else:
             allinone(fileinfo[0], fileinfo[1], fileinfo[2])
-    # 读取模板
-    try:
-        with open('./assets/index.html', 'r', encoding='utf-8') as f:
-            html = f.read()
-    except Exception:
-        sys.exit('Failed to read asset file.')
-    html = html.replace('__list__', '<br />'.join(filelist))
-    time_link = 'http://nodetime.gearhostpreview.com/'
-    try:
-        time_prc = requests.get(time_link, verify=False)
-        time_prc = time_prc.text
-    except Exception:
-        sys.exit('Failed to get time.')
-    html = html.replace('__time__', time_prc)
-    # 写入模板
-    try:
-        with open('./public/index.html', 'w', encoding='utf-8') as f:
-            f.write(html)
-    except Exception:
-        sys.exit('Failed to write index.html.')
+    render()
 
 
 if __name__ == '__main__':
     # 定义全局变量
     filelist = []
+    templates = ['index.html', 'index_en.html']
     main()
