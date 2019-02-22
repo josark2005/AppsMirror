@@ -5,6 +5,7 @@ import re
 import os
 import sys
 import ssl
+import shutil
 import urllib3
 import requests
 from contextlib import closing
@@ -84,6 +85,7 @@ def render():
         time_prc = time_prc.text
     except Exception:
         sys.exit('Failed to get time.')
+    # 页面创建
     for tpl in templates:
         # 读取模板
         try:
@@ -99,6 +101,12 @@ def render():
                 f.write(html)
         except Exception:
             sys.exit('Failed to write %s.' % tpl)
+    # 其他文件复制
+    for filename in assets:
+        try:
+            shutil.copyfile('./assets/' + filename, './public/' + filename)
+        except Exception:
+            sys.exit('Failed to copy %s.' % filename)
 
 
 def main():
@@ -129,4 +137,5 @@ if __name__ == '__main__':
     # 定义全局变量
     filelist = []
     templates = ['index.html', 'index_en.html']
+    assets = ['favicon.ico', 'favicon.svg']
     main()
