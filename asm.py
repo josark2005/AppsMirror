@@ -136,6 +136,6 @@ def main():
 if __name__ == '__main__':
     # 定义全局变量
     filelist = []
-    templates = ['index.html', 'index_en.html']
+    templates = ['index.html', 'index_en.html', 'about.html']
     assets = ['favicon.ico', 'favicon.svg', 'main.css']
     main()
