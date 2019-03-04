@@ -7,6 +7,7 @@ html,body {
   header {
     padding-top: 20px;
     padding-bottom: 20px;
+    margin-bottom: 20px;
     text-align: center;
     background-color: rgb(15,108,195)
   }
@@ -15,6 +16,7 @@ html,body {
   header {
     padding-top: 20px;
     padding-bottom: 20px;
+    margin-bottom: 20px;
     text-align: left;
     background-color: rgb(15,108,195)
   }
@@ -38,10 +40,6 @@ header p {
     margin: auto;
   }
 }
-div.container#container {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
 a.list {
   margin-bottom: 5px;
   font-size: 16px;
@@ -54,6 +52,7 @@ img {
 }
 @media screen and (max-width:640px) {
   footer {
+    margin-top: 20px;
     padding-top: 20px;
     height: 90px;
     width: 100%;
@@ -63,6 +62,7 @@ img {
 }
 @media screen and (min-width:641px) {
   footer {
+    margin-top: 20px;
     padding-top: 20px;
     height: 90px;
     width: 100%;
