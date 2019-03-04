@@ -3,10 +3,21 @@ html,body {
   padding: 0;
   height: 100%;
 }
-header {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  background-color: rgb(15,108,195)
+@media screen and (max-width:640px) {
+  header {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    background-color: rgb(15,108,195)
+  }
+}
+@media screen and (min-width:641px) {
+  header {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: left;
+    background-color: rgb(15,108,195)
+  }
 }
 header h1 {
   color: white;
@@ -14,9 +25,22 @@ header h1 {
 header p {
   color: white;
 }
-div.container {
-  max-width: 80%;
-  margin: auto;
+@media screen and (max-width:640px) {
+  div.container {
+    padding: 0 20px;
+    max-width: 100%;
+    margin: auto;
+  }
+}
+@media screen and (min-width:641px) {
+  div.container {
+    max-width: 80%;
+    margin: auto;
+  }
+}
+div.container#container {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 a.list {
   margin-bottom: 5px;
@@ -28,11 +52,23 @@ img {
   position: relative;
   top: 2px;
 }
-footer {
-  padding-top: 20px;
-  height: 90px;
-  width: 100%;
-  background-color: #3c3c3c;
+@media screen and (max-width:640px) {
+  footer {
+    padding-top: 20px;
+    height: 90px;
+    width: 100%;
+    text-align: center;
+    background-color: #3c3c3c;
+  }
+}
+@media screen and (min-width:641px) {
+  footer {
+    padding-top: 20px;
+    height: 90px;
+    width: 100%;
+    text-align: left;
+    background-color: #3c3c3c;
+  }
 }
 footer p {
   color: white;
