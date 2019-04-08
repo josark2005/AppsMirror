@@ -114,7 +114,6 @@ def main():
     download_list = [
         ('jokin1999', 'SMMS_Uploader', 'gui.exe'),
         ('jokin1999', 'PacDownloader', 'updatepac.exe'),
-        ('jokin1999', 'tcapps-checkin', 'checkin.exe'),
     ]
     # 检查目录情况
     if not (os.path.isdir('./public')):
